@@ -1,0 +1,49 @@
+{% extends 'layout/base.html'%}
+
+{% block title%}
+ {{ title}}  
+{% endblock%}
+
+{% block content%}
+
+{% load crispy_forms_tags %}
+<main class="main-content">
+    <div class="header">
+        <h1>{{ title  }}</h1>
+        <a href="{%url 'user:index'%}" class="back-button">← Retour</a>
+    </div>
+    
+    <form class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% comment %} <div class="form-group">
+        
+            {{ user_form }}
+         </div> {% endcomment %}
+       
+        <div class="form-group">
+            <label for="pseudo">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        {% comment %} <div class="form-group">
+            <label for="password_confirmation">Confirmer mot de passe</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" required>
+        </div> {% endcomment %}
+        
+
+        <div class="form-actions">
+            <button type="reset" class="btn cancel">Annuler</button>
+            <button type="submit" class="btn save">Enregistrer</button>
+        </div>
+    </form>
+</main>
+{% endblock%}
+            
+            
+               

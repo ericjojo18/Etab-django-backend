@@ -1,0 +1,78 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Ajouter un professeur
+{% endblock %}
+
+{% block content%}
+<main class="main-content">
+    <div class="header">
+        <h1>Ajouter un professeur</h1>
+        <a href="{%url 'teacher:index'%}" class="back-button">← Retour</a>
+    </div>
+    
+    <form class="form" method="POST" enctype="multipart/form-data">
+
+         {% csrf_token %}    
+        <div class="form-group">
+            {{ teacher_form}}
+        </div>
+        <!--<div class="form-group">
+            
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" required>
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <div>
+                <input type="radio" id="homme" name="genre" value="homme" required>
+                <label for="homme">Homme</label>
+                <input type="radio" id="femme" name="genre" value="femme" required>
+                <label for="femme">Femme</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="date_naissance">Date de naissance</label>
+            <input type="date" id="date_naissance" name="date_naissance" required>
+        </div>
+
+        <div class="form-group">
+            <label for="classe">Sélectionner une matiere</label>
+            <select id="classe" name="classe" required>
+                <option value="Math">Math</option>
+                <option value="Physique">Physique</option>
+                <option value="EPS">EPS</option>
+                <option value="SVT">SVT</option>
+                <option value="Philosophe">Philosophe</option>
+                <option value="Français">Français</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ville">Ville</label>
+            <input type="text" id="ville" name="ville" required>
+        </div>-->
+
+        <div class="form-actions">
+            <button type="reset" class="btn cancel">Annuler</button>
+            <button type="submit" class="btn save">Enregistrer</button>
+        </div>
+    </form>
+</main>
+{% endblock %}
+            
+            
+               

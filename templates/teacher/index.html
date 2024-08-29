@@ -1,0 +1,66 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des professeurs
+{% endblock %}
+
+{% block content%}
+<main>
+                
+    <div class="recent-orders">
+        <div class="header">
+            <h2>Professeurs ({{total}})</h2>
+            <a href="{%url 'teacher:add' %}" class="new-student-btn">+ Nouveau Professeur</a>   
+        </div>
+        
+        <table>
+            <thead>
+                
+                <tr>
+                    <th>Nom</th>
+                    <th>Prènom</th>
+                    <th>Matière</th>
+                    <th>Vacant</th>
+                    <th>Age</th>
+                    <th>Télephone</th>
+                    <th>Ville</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers%}
+                <tr>
+                    <td>{{teacher.first_name}}</td>
+                    <td>{{teacher.last_name}}</td>
+                    <td>{{teacher.matter}}</td>
+                    <td>{{teacher.is_vacant}}</td>
+                    <td>{{ teacher.age }}</td>
+                    <td>{{teacher.phone}}</td>
+                    <td>{{teacher.city}}</td>
+                    <td >
+                        <a href="{% url  'teacher:update' id=teacher.id %}"><button  class="btn edit">Modifier</button></a>
+
+                        <button id="deleteButton" data-url={%url 'teacher:delete' id=teacher.id%} class="btn delete">Supprimer</button> 
+                        
+                        
+                        
+                    </td>
+
+                </tr>
+                 {% endfor %} 
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cette professeur.</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+
+{% endblock %}
+            
+                
