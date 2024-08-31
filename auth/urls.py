@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views
 from auth.views  import  sing_in, sing_up, log_out
 
 app_name = "auth"

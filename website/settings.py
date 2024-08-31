@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "user.apps.UserConfig",
     "rapport",
     "auth.apps.AuthConfig",
+    "base.apps.BaseConfig",
 ]
 
 MIDDLEWARE = [

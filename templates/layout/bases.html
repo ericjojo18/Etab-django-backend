@@ -9,7 +9,7 @@
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="{%static 'fonts/material-icon/css/material-design-iconic-font.min.css'%}">
-
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
     <!-- Main css -->
     <link rel="stylesheet" href="{% static "css/auth.css" %}">
 </head>
@@ -28,6 +28,13 @@
 
     <!-- JS -->
     <script src="{% static "vendor/jquery/jquery.min.js"%}"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
     <script src={% static "js/main.js" %}></script>
+    <script> 
+        {%  for flashmsg in messages%}
+        alertify.set('notifier','position', 'top-right');
+        alertify.success('{{flashmsg}}');
+        {% endfor  %}
+    </script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

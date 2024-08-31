@@ -12,6 +12,8 @@ Liste des élèves
             <h2>Elèves (2)</h2>
             <a href="{% url 'student:add' %}" class="new-student-btn">+ Nouvel élève</a>   
         </div>
+        {% for msg in messages  %}
+        {%  endfor  %}
         
         <table id="MyTable" class="tab">
             <thead>

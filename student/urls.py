@@ -1,5 +1,7 @@
 from django.urls import path
 from student.views import index, add, update, delete
+from django.conf import settings
+from django.conf.urls.static import static
 
 #nom de notre application dans l'url (localhost:8000/eleve/) par la variable app_name
 app_name = "student"
@@ -10,4 +12,4 @@ urlpatterns = [
     path("ajout_eleve", add, name="add"),
     path("modif_eleve/<int:id>", update, name="update"),
     path("supprimer_eleve/<int:id>", delete, name="delete")
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
