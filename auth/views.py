@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from school.models.app_setting import AppSetting
+from school.models.school import School
 
 # Create your views here.
 
@@ -13,6 +15,13 @@ def index(request):
     return render(request, "dashbord/index.html")
 
 def sing_in(request):
+    app_settings = AppSetting.objects.all()
+    if not app_settings:
+        return redirect('appsetting:check_settings')
+    
+    school = School.objects.all()
+    if not school:
+        return redirect('school:check_school')
     #
     if request.method == "POST":
         username = request.POST.get('username','')

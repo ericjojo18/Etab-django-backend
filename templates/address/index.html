@@ -1,0 +1,55 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des addresse
+{%endblock%}
+    
+{% block content%}
+<main>
+    <div class="recent-orders" id="dashboard">
+        <div class="header">
+            <h2>Adresse (2)</h2>
+            <a href="{% url 'base:add' %}" class="new-student-btn">+ Nouvel address</a>   
+        </div>
+        {% for msg in messages  %}
+        {%  endfor  %}
+        
+        <table id="MyTable" class="tab">
+            <thead>
+                <tr>
+                    <th>Ville</th>
+                    <th>Street</th>
+                    <th>Pays</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for address in addresse%}
+                <tr>
+                    <td>{{address.city}}</td>
+                    <td>{{address.street}}</td>
+                    <td>{{address.country}}</td>
+                    <td >
+                        <a href="{% url 'base:update' address.id%}"><button class="btn edit">Modifier</button></a>
+                        <button id="deleteButton" class="btn delete" data-url={%url 'base:delete' id=address.id%}   >Supprimer</button> 
+                    </td>
+
+                </tr>
+                {%  endfor  %}
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cet éleve?</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+    
+{% endblock%}
+            

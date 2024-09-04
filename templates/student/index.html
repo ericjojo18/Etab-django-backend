@@ -12,6 +12,12 @@ Liste des élèves
             <h2>Elèves (2)</h2>
             <a href="{% url 'student:add' %}" class="new-student-btn">+ Nouvel élève</a>   
         </div>
+        <form class="" method="GET">
+            <input type="text" id="myInput" name="search" value="{{search_field}}" placeholder="Rechercher...">
+            <button onclick="" class="new-student-btn"> Rechercher</button>
+
+        </form>
+        
         {% for msg in messages  %}
         {%  endfor  %}
         
@@ -20,11 +26,12 @@ Liste des élèves
                 <tr>
                     <th>Nom</th>
                     <th>Prènom</th>
-                    <th>Classe</th>
-                    <th>Matricule</th>
-                    <th>Age</th>
+                    <th>Date naissance</th>
                     <th>Télephone</th>
-                    <th>Ville</th>
+                    <th>Genre</th>
+                    <th>Numero du pere</th>
+                    
+                    <th>Matricule</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,11 +40,12 @@ Liste des élèves
                 <tr>
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
-                    <td>{{student.classrom}}</td>
-                    <td>{{student.registration_number}}</td>
-                    <td>{{student.age }}</td>
-                    <td>{{student.phone}}</td>
-                    <td>{{student.city}}</td>
+                    <td>{{student.birthday }}</td>
+                    <td>{{student.phone_number}}</td>
+                    <td>{{student.gender}}</td>
+                    <td>{{student.phone_number_father}}</td>
+                    <td>{{student.matricule}}</td>
+                    
                     <td >
                         <a href="{% url 'student:update' student.id%}"><button class="btn edit">Modifier</button></a>
                         <button id="deleteButton" class="btn delete" data-url={%url 'student:delete' id=student.id%}   >Supprimer</button> 
@@ -56,6 +64,8 @@ Liste des élèves
         <button id="confirmDelete">Oui</button>
         <button id="cancelDelete">Non</button>
     </div>
+
+    
 </main>
     
 {% endblock%}

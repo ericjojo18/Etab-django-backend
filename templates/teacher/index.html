@@ -20,36 +20,44 @@ Liste des professeurs
                 <tr>
                     <th>Nom</th>
                     <th>Prènom</th>
-                    <th>Matière</th>
-                    <th>Vacant</th>
-                    <th>Age</th>
-                    <th>Télephone</th>
-                    <th>Ville</th>
+                    <th>Date de naissance</th>
+                    <th>Sexe</th>
+                    <th>Numero</th>
+                    <th>speciality</th>
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for teacher in teachers%}
-                <tr>
-                    <td>{{teacher.first_name}}</td>
-                    <td>{{teacher.last_name}}</td>
-                    <td>{{teacher.matter}}</td>
-                    <td>{{teacher.is_vacant}}</td>
-                    <td>{{ teacher.age }}</td>
-                    <td>{{teacher.phone}}</td>
-                    <td>{{teacher.city}}</td>
-                    <td >
-                        <a href="{% url  'teacher:update' id=teacher.id %}"><button  class="btn edit">Modifier</button></a>
+            
+                <tbody>
+                    {% if teachers  %}
+                        {% for teacher in teachers%}
+                        <tr>
+                            <td>{{teacher.first_name}}</td>
+                            <td>{{teacher.last_name}}</td>
+                            <td>{{teacher.birthday}}</td>
+                            <td>{{teacher.gender}}</td>
+                            <td>{{ teacher.phone_number }}</td>
+                            <td>{{teacher.speciality}}</td>
+                            <td >
+                                <a href="{% url  'teacher:update' id=teacher.id %}"><button  class="btn edit">Modifier</button></a>
 
-                        <button id="deleteButton" data-url={%url 'teacher:delete' id=teacher.id%} class="btn delete">Supprimer</button> 
-                        
-                        
-                        
-                    </td>
+                                <button id="deleteButton" data-url={%url 'teacher:delete' id=teacher.id%} class="btn delete">Supprimer</button> 
+                                
+                                
+                                
+                            </td>
 
-                </tr>
-                 {% endfor %} 
-            </tbody>
+                        </tr>
+                        {% endfor %} 
+
+                    {% else %}
+                    <tr>
+                        <td> Aucun professeur enregistreé </td>
+                    {% endif %}
+                    </tr>
+                </tbody>
+             
+
         </table>
         
     </div>

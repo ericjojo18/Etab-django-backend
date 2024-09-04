@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import  TeacherForms
-from .models import Teacher
+from .models.teacher import Teacher
 
 
 # Create your views here.

@@ -1,0 +1,61 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des élèves
+{%endblock%}
+    
+{% block content%}
+<main>
+    <div class="recent-orders" id="dashboard">
+        <div class="header">
+            <h2>Student cards (2)</h2>
+            <a href="{% url 'studentcard:add' %}" class="new-student-btn">+ Nouvel Cartes</a>   
+        </div>
+        {% for msg in messages  %}
+        {%  endfor  %}
+        
+        <table id="MyTable" class="tab">
+            <thead>
+                <tr>
+                    <th>student</th>
+                    <th>reference</th>
+                    <th>issue_date </th>
+                    <th>expiration_date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for student_card in student_cards%}
+                <tr>
+                    <td>{{student_card.student}}</td>
+                    <td>{{student_card.reference }}</td>
+                    <td>{{student_card.issue_date }}</td>
+                    <td>{{student_card.expiration_date}}</td>
+                    
+                    <td >
+                        <a href="{% url 'studentcard:update' student_card.id%}"><button class="btn edit">Modifier</button></a>
+                        <button id="deleteButton" class="btn delete" data-url={%url 'studentcard:delete' id=student_card.id%}   >Supprimer</button> 
+                    </td>
+
+                </tr>
+                {%  endfor  %}
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cet éleve?</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+
+    
+
+    
+</main>
+    
+{% endblock%}
+            

@@ -4,6 +4,7 @@
 {% block title%}
 {{ title}}
 {%endblock%}
+{% load crispy_forms_tags %}
 
 {% block content%}
 <main class="main-content">
@@ -14,9 +15,18 @@
    
     <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-       
+       <h3> Eleve</h3>
         <div class="form-group">
         {{ student_form }}
+        </div>
+        <h3> address</h3>
+        <div class="form-group">
+            {{address_form }}
+        </div>
+
+        <h3> Utilisateurs</h3>
+        <div class="form-group">
+            {{user_form }}
         </div>
         <!--<div class="form-group">
             <label for="nom">Nom</label>
@@ -76,6 +86,7 @@
         </div>
     </form>
 </main>
+
 {% endblock%}
            
         

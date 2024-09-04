@@ -1,13 +1,13 @@
 from django.db import models
-from base.models.person import Person
+from base.models.helpers.person import Person
 
 class Student(Person):
-    matricule = models.CharField(max_length=30)
-    phone_number_father = models.CharField(max_length=10)
+    matricule = models.CharField(max_length=255)
+    phone_number_father = models.CharField(max_length=255)
     
     def __str__(self):
-        return self.matricule, self.phone_number_father
+        return f"{self.first_name}"
     
     class Meta:
         verbose_name = "Student"
-        verbose_name = "Students"
+        verbose_name_plural = "Students"

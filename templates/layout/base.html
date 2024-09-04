@@ -1,4 +1,6 @@
 {% load static %}
+{% url 'appsetting:add' as appsettings%}
+{% url 'school:add' as school%}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,73 +21,102 @@
     </head>     
     <body>
         <div class="container">
-            <aside>
-                <div class="top">
-                    <div class="logo">
-                        <h2>Mon<span class="danger">Etab</span></h2>
-                    </div>
-                    <div class="close" id="close-btn">
-                        <span class="material-icons sharp">close</span>
-                    </div>
-                </div>
-                <div class="sidebar">
-                    <a href="{% url 'dashboard:dashboard'%}">
-                        <span class="material-icons sharp">dashboard</span>
-                        <h3>Dashboard</h3>
-                    </a>
-                    <a href="{% url 'student:index'%}" class="active">
-                        <span class="material-icons sharp">groups</span>
-                        <h3>élèves</h3>
-                    </a>
-                    <a href="{% url 'teacher:index'%}">
-                        <span class="material-icons sharp">supervisor_account</span>
-                        <h3>Professeurs</h3>
-                    </a>
-                    <a href="{% url 'user:index'%}">
-                        <span class="material-icons sharp">person</span>
-                        <h3>Utilisateurs</h3>
-                    </a>
-                    <a href="{% url 'rapport:rapport'%}">
-                        <span class="material-icons sharp">analytics</span>
-                        <h3>Rapports</h3>
-                    </a>
-
-                    <a href="{% url 'auth:logout'  %}">
-                        <span class="material-icons sharp">logout</span>
-                       
-                        <h3>Déconnexion</h3>
-                    </a>
-                </div>
-            </aside>
-            {% block content %}
-
-            {% endblock  %} 
-            <div class="right">
-                <div class="top">
-                    <button id="menu-btn">
-                        <span class="material-symbols-outlined">
-                            menu
-                            </span>
-                    </button>
-                    <div class="theme-toggler">
-                        <span class="material-symbols-outlined active">light_mode</span>
-                        <span class="material-symbols-outlined">dark_mode</span>
-                    </div>
-
-                    <div class="profile">
-                        {% if user.is_authenticated%}
-                        <div class="info">
-                            <p>Bonjour, <b>{{user.username}}</b></p>
-                            <small class="text-muted">Admin</small>
+            
+                <aside>
+                    {% if request.path != appsettings and request.path != school %}
+                    <div class="top">
+                        <div class="logo">
+                            <h2>Mon<span class="danger">Etab</span></h2>
                         </div>
-                        <div class="profile-photo">
-                            <img src="asset/img/profile-1.jpg">
+                        <div class="close" id="close-btn">
+                            <span class="material-icons sharp">close</span>
                         </div>
-                        {%  endif  %}
+                    </div>
+                    <div class="sidebar">
+                        <a href="{% url 'dashboard:dashboard'%}">
+                            <span class="material-icons sharp">dashboard</span>
+                            <h3>Dashboard</h3>
+                        </a>
+                        <a href="{% url 'appsetting:index' %}">
+                            <span class="material-icons sharp"></span>
+                            <h3>AppSetting</h3>
+                        </a>
+                        <a href="{% url 'school:index' %}">
+                            <span class="material-icons sharp"></span>
+                            <h3>Ecole</h3>
+                        </a>
+                        <a href="{% url 'base:index' %}">
+                            <span class="material-icons sharp"></span>
+                            <h3>address</h3>
+                        </a>
+                        <a href="{% url 'student:index' %}" class="active">
+                            <span class="material-icons sharp">groups</span>
+                            <h3>élèves</h3>
+                        </a>
+                        <a href="{% url 'student_absence:index' %}" >
+                            <span class="material-icons sharp">groups</span>
+                            <h3>élèves-absence</h3>
+                        </a>
+                        <a href="{% url 'studentcard:index'  %}" >
+                            <span class="material-icons sharp">groups</span>
+                            <h3>élèves-card</h3>
+                        </a>
+                        <a href="{% url 'teacher:index' %}">
+                            <span class="material-icons sharp">supervisor_account</span>
+                            <h3>Professeurs</h3>
+                        </a>
+                        <a href="{% url 'role:index' %}">
+                            <span class="material-icons sharp">supervisor_account</span>
+                            <h3>Role</h3>
+                        </a>
+                        <a href="{% url 'user:index'    %}">
+                            <span class="material-icons sharp">person</span>
+                            <h3>Utilisateurs</h3>
+                        </a>
+                        <a href="{% url 'rapport:rapport'   %}">
+                            <span class="material-icons sharp">analytics</span>
+                            <h3>Rapports</h3>
+                        </a>
+
+                        <a href="{% url 'auth:logout'  %}">
+                            <span class="material-icons sharp">logout</span>
                         
+                            <h3>Déconnexion</h3>
+                        </a>
+                    </div>
+            {% endif %}
+
+                </aside>
+                {% block content %}
+
+                {% endblock  %} 
+                <div class="right">
+                    <div class="top">
+                        <button id="menu-btn">
+                            <span class="material-symbols-outlined">
+                                menu
+                                </span>
+                        </button>
+                        <div class="theme-toggler">
+                            <span class="material-symbols-outlined active">light_mode</span>
+                            <span class="material-symbols-outlined">dark_mode</span>
+                        </div>
+
+                        <div class="profile">
+                            {% if user.is_authenticated%}
+                            <div class="info">
+                                <p>Bonjour, <b>{{user.username}}</b></p>
+                                <small class="text-muted">Admin</small>
+                            </div>
+                            <div class="profile-photo">
+                                <img src="asset/img/profile-1.jpg">
+                            </div>
+                            {%  endif  %}
+                            
+                        </div>
                     </div>
                 </div>
-            </div>
+            
         </div>
         
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -16,12 +16,12 @@
     <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         
-        {% comment %} <div class="form-group">
+        <div class="form-group">
         
             {{ user_form }}
-         </div> {% endcomment %}
+         </div> 
        
-        <div class="form-group">
+        {% comment %} <div class="form-group">
             <label for="pseudo">Username</label>
             <input type="text" id="username" name="username" required>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
-        </div>
+        </div> {% endcomment %}
 
         {% comment %} <div class="form-group">
             <label for="password_confirmation">Confirmer mot de passe</label>

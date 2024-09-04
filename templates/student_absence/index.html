@@ -1,0 +1,56 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des élèves
+{%endblock%}
+    
+{% block content%}
+<main>
+
+    <div class="recent-orders" id="dashboard">
+        <div class="header">
+            <h2>Absence(2)</h2>
+            <a href="{% url 'student_absence:add' %}" class="new-student-btn">+ Nouvel Absence</a>   
+        </div>
+        {% for msg in messages  %}
+        {%  endfor  %}
+        
+        <table id="MyTable" class="tab">
+            <thead>
+                <tr>
+                    <th>Eleve</th>
+                    <th>Date absence</th>
+                    <th>Nombre absence</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for absence in absences%}
+                <tr>
+                    <td>{{absence.student}}</td>
+                    <td>{{absence.absence_date}}</td>
+                    <td>{{absence.absence_number }}</td>
+                    
+                    <td >
+                        <a href="{% url 'student_absence:update' absence.id%}"><button class="btn edit">Modifier</button></a>
+                        <button id="deleteButton" class="btn delete" data-url={%url 'student_absence:delete' id=absence.id%}   >Supprimer</button> 
+                    </td>
+
+                </tr>
+                {%  endfor  %}
+                
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cet éleve?</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+    
+{% endblock%}
+            

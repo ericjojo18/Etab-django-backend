@@ -1,0 +1,59 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des professeurs
+{% endblock %}
+
+{% block content%}
+<main>
+                
+    <div class="recent-orders">
+        <div class="header">
+            <h2>Ecole ({{total}})</h2>
+            {% comment %} <a href="{%url 'school:add' %}" class="new-student-btn">+ Nouveau Ecole</a>    {% endcomment %}
+        </div>
+        
+        <table>
+            <thead>
+                
+                <tr>
+                    <th>Nom</th>
+                    <th>Url</th>
+                    <th>AppSetting</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for school in schools%}
+                <tr>
+                    <td>{{school.name}}</td>
+                    <td>{{school.url_logo}}</td>
+                    <td>{{school.app}}</td>
+                    <td >
+                        <a href="{% url  'school:update' id=school.id %}"><button  class="btn edit">Modifier</button></a>
+
+                        <button id="deleteButton" data-url={%url 'school:delete' id=school.id%} class="btn delete">Supprimer</button> 
+                        
+                        
+                        
+                    </td>
+
+                </tr>
+                 {% endfor %} 
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cette professeur.</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+
+{% endblock %}
+            
+                

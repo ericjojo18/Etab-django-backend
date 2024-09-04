@@ -1,0 +1,55 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des roles
+{% endblock %}
+
+{% block content%}
+<main>
+                
+    <div class="recent-orders">
+        <div class="header">
+            <h2>role ({{total}})</h2>
+            <a href="{%url 'role:add' %}" class="new-student-btn">+ Nouveau Professeur</a>   
+        </div>
+        
+        <table>
+            <thead>
+                
+                <tr>
+                    <th>Nom du role</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for role in roles%}
+                <tr>
+                    <td>{{role.role}}</td>
+                    <td >
+                        <a href="{% url  'role:update' id=role.id %}"><button  class="btn edit">Modifier</button></a>
+
+                        <button id="deleteButton" data-url={%url 'role:delete' id=role.id%} class="btn delete">Supprimer</button> 
+                        
+                        
+                        
+                    </td>
+
+                </tr>
+                 {% endfor %} 
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cette role.</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+
+{% endblock %}
+            
+                

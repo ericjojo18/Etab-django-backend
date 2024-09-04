@@ -16,22 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
-from student.views import index
+
 from dashbord.views import index
 from teacher.views import index
-from user.views import index
+#from user.views import index
 from rapport.views import index
 
 
 urlpatterns = [
     #notre application (localhost:8000/)
-    path("",include('auth.urls')),
+    path('',include('school.urls')),
+    path("auth/",include('auth.urls')),
     path("admin/", admin.site.urls),
+    path("address/", include('base.urls')),
     path('eleve/', include('student.urls')),
     path('dashbord/', include('dashbord.urls')),
     path('professeur/',include('teacher.urls')), 
     path('utilisateur/',include('user.urls')),
-    path('rapport/',include('rapport.urls'))
+    path('rapport/',include('rapport.urls')),
+    
     
     
 ]

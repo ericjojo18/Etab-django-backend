@@ -1,0 +1,61 @@
+
+{% extends "layout/base.html" %}
+
+{% block title%}
+Liste des parametres de l'ecole
+{% endblock %}
+
+{% block content%}
+<main>
+                
+    <div class="recent-orders">
+        <div class="header">
+            <h2>AppSetting ({{total}})</h2>
+            {% comment %} <a href="{%url 'appsetting:add' %}" class="new-student-btn">+ Nouveau AppSetting</a>    {% endcomment %}
+        </div>
+        
+        <table>
+            <thead>
+                
+                <tr>
+                    <th>smtp_server</th>
+                    <th>smtp_port</th>
+                    <th>smtp_username</th>
+                    <th>smtp_password</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appsetting in appsettings%}
+                <tr>
+                    <td>{{appsetting.smtp_server}}</td>
+                    <td>{{appsetting.smtp_port}}</td>
+                    <td>{{appsetting.smtp_username}}</td>
+                    <td>{{appsetting.smtp_password}}</td>
+                    <td >
+                        <a href="{% url  'appsetting:update' id=appsetting.id %}"><button  class="btn edit">Modifier</button></a>
+
+                        <button id="deleteButton" data-url={%url 'appsetting:delete' id=appsetting.id%} class="btn delete">Supprimer</button> 
+                        
+                        
+                        
+                    </td>
+
+                </tr>
+                 {% endfor %} 
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="alert">
+        <p>ATTENTION !!</p>
+        <p>Voulez-vous vraiment supprimer cette professeur.</p>
+        <button id="confirmDelete">Oui</button>
+        <button id="cancelDelete">Non</button>
+    </div>
+</main>
+
+{% endblock %}
+            
+                
