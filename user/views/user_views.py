@@ -18,10 +18,10 @@ def index(request, ):
         }
     else:
         users = User.objects.all()
-        numbers_users = users.count()
+        total_users = users.count()
         context = {
             'users': users,
-            'total': numbers_users,
+            'total_users': total_users,
         }
     #users = User.objects.all()
     #context = {'users':users}
@@ -51,6 +51,18 @@ def add(request):
                }
     return render(request, "user/form.html", context )
     #return render(request, "user/add_user.html", context)
+@login_required(login_url='auth:login')   
+def user_status(request, id):
+    user = User.objects.get(id=id)
+
+    user.is_active = not user.is_active
+    user.save()
+    status = "active" if user.is_active else "désactive"
+    messages.success(request, f"L'utilisateur a été {status} avec succès.")
+    return redirect('user:index', )
+    
+    #return render(request, "user/form.html", {'user': user} )
+
 @login_required(login_url='auth:login')
 def update(request, id):
     

@@ -15,13 +15,17 @@ def index(request):
     return render(request, "dashbord/index.html")
 
 def sing_in(request):
-    app_settings = AppSetting.objects.all()
+    app_settings = AppSetting.objects.first()
     if not app_settings:
         return redirect('appsetting:check_settings')
     
-    school = School.objects.all()
+    school = School.objects.first()
     if not school:
         return redirect('school:check_school')
+    
+    if request.user.is_authenticated:
+        # Si l'utilisateur est déjà connecté, redirigez-le vers le tableau de bord
+        return redirect('dashboard:dashboard')
     #
     if request.method == "POST":
         username = request.POST.get('username','')
@@ -43,7 +47,7 @@ def sing_in(request):
         else:
             messages.error(request, "Invalid username or password")
             return render(request, "auth/login.html")
-    
+        
     return render(request, "auth/login.html")
 
 def sing_up(request):

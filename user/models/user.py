@@ -11,7 +11,7 @@ class User(AbstractUser):
     #pseudo = models.CharField(max_length=100)
     #password = models.CharField(max_length=255)
     
-    def __str__(self):
+    def __str__(self): 
         return f"{self.username}, "
     
     class Meta:

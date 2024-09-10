@@ -10,7 +10,7 @@ Liste des élèves
 
     <div class="recent-orders" id="dashboard">
         <div class="header">
-            <h2>Absence(2)</h2>
+            <h2>Absence({{ total_absences }})</h2>
             <a href="{% url 'student_absence:add' %}" class="new-student-btn">+ Nouvel Absence</a>   
         </div>
         {% for msg in messages  %}

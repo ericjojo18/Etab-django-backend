@@ -7,7 +7,7 @@ class AppSetting(models.Model):
     smtp_password = models.CharField(max_length=100)
     
     def __str__(self):
-        return f"{self.smtp_server}, {self.smtp_port}, {self.smtp_username}, {self.smtp_password}"
+        return f" {self.smtp_username}"
     
     class Meta:
         verbose_name = "AppSetting"

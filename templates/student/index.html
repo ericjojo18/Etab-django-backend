@@ -9,7 +9,7 @@ Liste des élèves
 <main>
     <div class="recent-orders" id="dashboard">
         <div class="header">
-            <h2>Elèves (2)</h2>
+            <h2>Elèves ({{ students_number }})</h2>
             <a href="{% url 'student:add' %}" class="new-student-btn">+ Nouvel élève</a>   
         </div>
         <form class="" method="GET">

@@ -807,3 +807,55 @@ main table tbody tr:last-child td{
     }
     
 }
+
+.modal {
+    display: none; /* Masquer la modale par défaut */
+    position: fixed; /* Rester en place même en scrollant */
+    z-index: 1; /* Assurer que la modale soit au-dessus du contenu */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largeur complète */
+    height: 100%; /* Hauteur complète */
+    overflow: auto; /* Ajouter un défilement si nécessaire */
+    background-color: rgb(0,0,0); /* Couleur de fond de la modale */
+    background-color: rgba(0,0,0,0.4); /* Fond semi-transparent */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Centrer la modale */
+    padding: 20px;
+    justify-content: center;
+    border: 1px solid #888;
+    width: 80%; /* Largeur de la modale */
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.alert p {
+    margin: 15px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.modal-header, .modal-footer {
+    padding: 10px 0;
+}
+
+.modal-body {
+    padding: 20px 0;
+}

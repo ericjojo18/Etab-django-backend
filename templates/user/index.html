@@ -9,9 +9,10 @@ Liste des utilisateurs
                 
     <div class="recent-orders">
         <div class="header">
-            <h2>Utilisateur (2)</h2>
+            <h2>Utilisateur ({{ total_users }})</h2>
             <a href="{%url 'user:add' %}" class="new-student-btn">+ Nouveau utilisateur</a>   
         </div>
+        
         <form class="" method="GET">
             <input type="text" id="myInput" name="search" value="{{search_field}}" placeholder="Rechercher...">
             <button onclick="" class="new-student-btn"> Rechercher</button>
@@ -22,29 +23,79 @@ Liste des utilisateurs
             <thead>
                 <tr>
                     <th>Pseudo</th>
-                    <th>Date de creation</th>
-                    
+                    <th>Date de création</th>
+                    <th>Statut</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for user in users%}
+                {% for user in users %}
                 <tr>
-                    <td>{{user.username}}</td>
-                    <td>{{user.date_joined|date:"Y-m-d"}}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.date_joined|date:"Y-m-d" }}</td>
                     <td>
-                        <a href={% url 'user:update' user.id %}><button  class="btn edit">Modifier</button></a>
-                        
+                        {% if user.is_active %}
+                            <span style="color: green;">Actif</span>
+                        {% else %}
+                            <span style="color: red;">Inactif</span>
+                        {% endif %}
                     </td>
-
+                    <td>
+                        <a href="{% url 'user:update' user.id %}"><button class="btn edit">Modifier</button></a>
+                        <button type="button" class="new-student-btn" onclick="openModals('confirmModal-{{ user.id }}')">
+                            {% if user.is_active %}Désactiver{% else %}Activer{% endif %}
+                        </button>
+                    </td>
                 </tr>
+        
+                <!-- Modale personnalisée -->
+                <div id="confirmModal-{{ user.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModals('confirmModal-{{ user.id }}')">&times;</span>
+                        <div class="modal-header">
+                            <h5>Confirmation</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir {% if user.is_active %}désactiver{% else %}activer{% endif %} l'utilisateur {{ user.username }} ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url 'user:user_status' user.id %}" class="new-student-btn">Confirmer</a>
+                            <button type="button" class="btn delete" onclick="closeModals('confirmModal-{{ user.id }}')">Annuler</button>
+                        </div>
+                        {% comment %} <h5>Confirmation</h5> {% endcomment %}
+                        {% comment %} <p>Êtes-vous sûr de vouloir {% if user.is_active %}désactiver{% else %}activer{% endif %} l'utilisateur {{ user.username }} ?</p> {% endcomment %}
+                        {% comment %} <a href="{% url 'user:user_status' user.id %}" class="new-student-btn">Confirmer</a>
+                        <button type="button" class="btn delete" onclick="closeModals('confirmModal-{{ user.id }}')">Annuler</button> {% endcomment %}
+                    </div>
+                </div>
                 {% endfor %}
             </tbody>
         </table>
         
-    </div>
+        
    
 </main>
+
+{% comment %} <script>
+    function openModals(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+    
+    // Fonction pour fermer la modale
+    function closeModals(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+    
+    // Fermer la modale en cliquant en dehors de la zone de contenu
+    window.onclick = function(event) {
+        var modals = document.querySelectorAll('.modal');
+        modals.forEach(function(modal) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+</script> {% endcomment %}
    
 {% endblock %}
            

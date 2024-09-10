@@ -25,4 +25,3 @@ const showHiddenPass =(loginPassword, loginEye)=>{
 
 showHiddenPass('login-password', 'login-eye')
 
-/*==================== Pour la suppression professeur ====================*/

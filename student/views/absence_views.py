@@ -10,9 +10,10 @@ from student.models.absence import Absence
 @login_required(login_url='auth:login')
 def index(request):
     absences = Absence.objects.all()
-    
+    total_absences = absences.count()
     
     context = {'absences': absences,
+               'total_absences': total_absences,
                }
     return render(request, "student_absence/index.html", context)
 

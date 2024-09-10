@@ -19,7 +19,9 @@ def index(request):
                }
     else:
         students = Student.objects.all()
+        students_number = students.count()
         context = {'students': students,
+                   'students_number': students_number,
                }
     return render(request, "student/index.html", context)
 

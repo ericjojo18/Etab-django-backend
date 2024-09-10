@@ -9,8 +9,24 @@ from .models.teacher import Teacher
 @login_required(login_url='/')
 def index(request):
     
-    teachers = Teacher.objects.all()
-    context = {'teachers': teachers}
+    search_field = request.GET.get('search')
+    if search_field :
+        teachers = Teacher.objects.filter(first_name__icontains=search_field) | Teacher.objects.filter(last_name__icontains=search_field)
+        context = {
+            'teachers': teachers,
+            'search_field': search_field,
+        }
+    else:
+        teachers = Teacher.objects.all()
+        total_teachers = teachers.count()
+        context = {
+            'teachers': teachers,
+            'total_teachers': total_teachers,
+
+        }
+    
+    # teachers = Teacher.objects.all()
+    # context = {'teachers': teachers}
     return render(request, "teacher/index.html", context)
 
 @login_required(login_url='auth:login')

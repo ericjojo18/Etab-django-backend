@@ -1,2 +1,2 @@
-from .app_settings_views import index, add, update
-from .school_views import index, add, update, delete 
+from .app_settings_views import check_settings, add, update
+from .school_views import  add, update 

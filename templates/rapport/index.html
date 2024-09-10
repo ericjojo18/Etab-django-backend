@@ -2,35 +2,42 @@
 
 {% block title%}
 Rapport
-{%endblock%}
+{% endblock %}
     
 {% block content%}
             <main class="main-content">
                 <div class="header">
                     <h1>Rapport</h1>
-                    <a href="{%url 'rapport:rapport'%}" class="back-button">← Retour</a>
+                    <a href="{%url 'rapport:rapport' %}" class="back-button">← Retour</a>
                 </div>
                 
-                <form class="form">
-    
-                    <div class="form-group">
+                <form class="form" method="POST" action="{% url 'rapport:generate' %}">
+                        {% csrf_token %}
+                    <div class="form-group" >
+                        
                         <label for="rapport">Sélectionner une option</label>
-                        <select id="rapport" name="rapport" required>
-                            <option value="Liste des élèves">Liste des élèves</option>
-                            <option value="Liste des professeurs">Liste des professeurs</option>
-                            <option value="Liste des utilisateurs">Liste des utilisateurs</option>
+                        <select id="select" name="data_type" >
+                            <option value="student">Liste des élèves</option>
+                            <option value="teacher">Liste des professeurs</option>
+                            <option value="user">Liste des utilisateurs</option>
                            
                         </select>
                     </div>
 
     
                     <div class="form-actions">
-                        <button type="reset" class="btn cancel">Généner format PDF</button>
-                        <button type="submit" class="btn save">Généner format Excel</button>
+                        <button type="submit" name="button" value="pdf" class="btn cancel">Généner format PDF</button>
+                        <button type="submit" name="button" value="excel" class="btn save">Généner format Excel</button>
                     </div>
                 </form>
             </main>
                 <!-- END OF MAIN -->
-                 
-{%endblock%}
+             <script>
+                function generateReport(format) {
+                    var dataType = document.getElementById("rapport").value;
+                    var url = "/generate-report/?reports=" + format + "&datas=" + dataType;
+                    window.location.href = url;
+                }
+             </script>    
+{% endblock %}
       

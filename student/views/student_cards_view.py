@@ -9,7 +9,9 @@ from student.forms.formsStudC import StudentCardForm
 @login_required(login_url='auth:login')
 def index(request):
     student_cards = StudentCards.objects.all()
+    total_student_cards = student_cards.count()
     context = {'student_cards': student_cards,
+               'total_student_cards': total_student_cards,
                }
     return render(request, "student_cards/index.html", context)
 

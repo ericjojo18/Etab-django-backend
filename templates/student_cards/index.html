@@ -9,7 +9,7 @@ Liste des élèves
 <main>
     <div class="recent-orders" id="dashboard">
         <div class="header">
-            <h2>Student cards (2)</h2>
+            <h2>Student cards ({{ total_student_cards }})</h2>
             <a href="{% url 'studentcard:add' %}" class="new-student-btn">+ Nouvel Cartes</a>   
         </div>
         {% for msg in messages  %}

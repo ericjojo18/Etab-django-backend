@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect, get_object_or_404 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from school.forms.forms_app_settings import AppSettingForm
@@ -8,11 +8,12 @@ from django.urls import reverse
 # Create your views here. 
 
 ##################################### AppSetting ################################
-@login_required(login_url='auth:login')
-def index(request):
-    appsettings = AppSetting.objects.all()
-    context = {'appsettings': appsettings}
-    return render(request, "appsetting/index.html", context)
+# @login_required(login_url='auth:login')
+# def index(request):
+#     appsetting = AppSetting.objects.all()
+#     print(appsetting)
+#     context = {'appsetting': appsetting}
+#     return render(request, "appsetting/index.html", context)
 
 # @login_required(login_url='auth:login')
 def add(request):
@@ -26,40 +27,44 @@ def add(request):
             
             appsetting_form.save()
             messages.success(request, "Paramétre ajoute.")
-            return redirect(reverse('appsetting:index'))
+            return redirect('school:add')
         else: 
             appsetting_form = AppSettingForm()
             print(appsetting_form.errors)
-            messages.error(request, "Eleve non")
-            #return render(request, "student/add_student.html" )
-        app_settings = AppSetting.objects.all()
+            messages.error(request, "Paramétre non modifie")
         
-        if not app_settings:
-            return redirect('appsetting:add')
-        else:
-            return redirect('school:add')
-    
-    appsetting_form = AppSettingForm()
+    app_settings = AppSetting.objects.all()
+        
+        # if not app_settings:
+        #     return redirect('appsetting:add')
+        # else:
+        #     return redirect('school:add')
+    if app_settings:
+            return redirect('auth:login')
+    else:
+            #return redirect('school:add')
+        appsetting_form = AppSettingForm()
     context = {'appsetting_form': appsetting_form,
-               'title': 'Ajouter  un parametre'
+               'title': 'Ajouter un parametre'
                }
     return render(request, "appsetting/form.html", context )
 
 @login_required(login_url='auth:login')
-def update(request, id): 
+def update(request, ): 
     
-    appsetting = AppSetting.objects.get(id=id)
-    context = {'title': 'Modifier un absence'}
+    #appsetting = AppSetting.objects.get(id=id)
+    appsetting = AppSetting.objects.first()
+    context = {'title': 'Modifier un paramétre'}
     if request.method == 'POST':
-        absence_form = AppSettingForm(request.POST, instance=appsetting)
-        if absence_form.is_valid():
-            absence_form.save()
+        appsetting_form = AppSettingForm(request.POST, instance=appsetting)
+        if appsetting_form.is_valid():
+            appsetting_form.save()
             messages.success(request, "Paramétre modifié.")
-            return redirect(reverse('appsetting:index'))
+            return redirect('appsetting:index')
     else:
         appsetting_form = AppSettingForm(instance=appsetting)
         
-    appsetting_form = AppSettingForm(instance=appsetting)
+#appsetting_form = AppSettingForm(instance=appsetting)
     context ["appsetting_form"] = appsetting_form
     return render(request, "appsetting/form.html", context, )
 

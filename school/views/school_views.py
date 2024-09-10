@@ -8,12 +8,12 @@ from school.models.school import School
 
 ##################################### School ################################
 
-def index(request):
-    schools = School.objects.all()
-    context = {'schools': schools}
-    return render(request, "school/index.html", context)
+# def index(request):
+#     schools = School.objects.all()
+#     context = {'schools': schools}
+#     return render(request, "school/index.html", context)
 
-# @login_required(login_url='auth:login')
+#@login_required(login_url='auth:login')
 def add(request):
     if request.method == 'POST':
         school_form = SchoolForm(request.POST)
@@ -25,54 +25,60 @@ def add(request):
             
             school_form.save()
             messages.success(request, "Ecole ajoute.")
-            return redirect('school:index')
+            return redirect('auth:login')
         else: 
             school_form = SchoolForm()
             #print(appsetting_form.errors)
-            messages.error(request, "Ecole non")
+            messages.error(request, "Ecole non modifié")
             #return render(request, "student/add_student.html" )
-        
+    schools = School.objects.all()
     
-    school_form = SchoolForm()
+        
+        
+    if schools:
+        return redirect('auth:login')
+
+    else:
+    
+        school_form = SchoolForm()
     context = {'school_form': school_form,
-               'title': 'Ajouter  un parametre'
+               'title': 'Ajouter  une ecole'
                }
     return render(request, "school/form.html", context )
 
 @login_required(login_url='auth:login')
-def update(request, id): 
+def update(request): 
     
-    school = School.objects.get(id=id)
-    context = {'title': 'Modifier un absence'}
+    # school = School.objects.get(id=id)
+    #pour recuperer les paramètres d'un seul ecole
+    school = School.objects.first()
+    context = {'title': 'Modifier une école'}
     if request.method == 'POST':
         school_form = SchoolForm(request.POST, instance=school)
         if school_form.is_valid():
             school_form.save()
-            messages.success(request, "Paramétre modifié.")
+            messages.success(request, "Ecole modifié.")
             return redirect('school:index')
     else:
         school_form = SchoolForm(instance=school)
-        check_school = School.objects.all()
-        if not check_school:
-            return redirect('school:add')
-        else:
-            return redirect('auth:login')
+        
+        
         
     school_form = SchoolForm(instance=school)
     context ["school_form"] = school_form
     return render(request, "school/form.html", context, )
 
 #la fonction check_settings permet de bloquer l'utilisateur si il n'est pas connecté
-def check_settings(request):
-    school = School.objects.all()
-    if not school:
+def check_schools(request):
+    schools = School.objects.all()
+    if not schools:
         return redirect('school:add')
     else:
         return redirect('auth:login')
 
-@login_required(login_url='auth:login')
-def delete(request, id): 
-    school = School.objects.get(id=id)
-    school.delete()
-    messages.warning(request, "Parametre supprime.")
-    return redirect('school:index')
+# @login_required(login_url='auth:login')
+# def delete(request, id): 
+#     school = School.objects.get(id=id)
+#     school.delete()
+#     messages.warning(request, "Parametre supprime.")
+#     return redirect('school:index')

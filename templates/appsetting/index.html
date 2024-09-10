@@ -13,7 +13,7 @@ Liste des parametres de l'ecole
             <h2>AppSetting ({{total}})</h2>
             {% comment %} <a href="{%url 'appsetting:add' %}" class="new-student-btn">+ Nouveau AppSetting</a>    {% endcomment %}
         </div>
-        
+        {% if appsetting %}
         <table>
             <thead>
                 
@@ -27,26 +27,24 @@ Liste des parametres de l'ecole
                 </tr>
             </thead>
             <tbody>
-                {% for appsetting in appsettings%}
-                <tr>
-                    <td>{{appsetting.smtp_server}}</td>
-                    <td>{{appsetting.smtp_port}}</td>
-                    <td>{{appsetting.smtp_username}}</td>
-                    <td>{{appsetting.smtp_password}}</td>
-                    <td >
-                        <a href="{% url  'appsetting:update' id=appsetting.id %}"><button  class="btn edit">Modifier</button></a>
+                {% for app in appsetting %}
+                    <tr>
+                        <td>{{app.smtp_server}}</td>
+                        <td>{{app.smtp_port}}</td>
+                        <td>{{app.smtp_username}}</td>
+                        <td>{{app.smtp_password}}</td>
+                        <td >
+                             <a href="{% url  'appsetting:update' id=app.id %}"><button  class="btn edit">Modifier</button></a> 
 
-                        <button id="deleteButton" data-url={%url 'appsetting:delete' id=appsetting.id%} class="btn delete">Supprimer</button> 
-                        
-                        
-                        
-                    </td>
+                            {% comment %} <button id="deleteButton" data-url={% url 'appsetting:delete' id=appsetting.id %} class="btn delete">Supprimer</button>  {% endcomment %}
+                            
+                        </td>
 
-                </tr>
-                 {% endfor %} 
+                    </tr>
+                {% endfor %} 
             </tbody>
         </table>
-        
+        {% endif %}
     </div>
     <div class="alert">
         <p>ATTENTION !!</p>

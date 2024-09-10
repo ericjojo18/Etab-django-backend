@@ -10,9 +10,14 @@ Liste des professeurs
                 
     <div class="recent-orders">
         <div class="header">
-            <h2>Professeurs ({{total}})</h2>
+            <h2>Professeurs ({{ total_teachers }})</h2>
             <a href="{%url 'teacher:add' %}" class="new-student-btn">+ Nouveau Professeur</a>   
         </div>
+        <form class="" method="GET">
+            <input type="text" id="myInput" name="search" value="{{search_field}}" placeholder="Rechercher...">
+            <button onclick="" class="new-student-btn"> Rechercher</button>
+
+        </form>
         
         <table>
             <thead>

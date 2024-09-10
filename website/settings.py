@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "auth.apps.AuthConfig",
     "base.apps.BaseConfig",
     "school.apps.SchoolConfig",
+    "api.apps.ApiConfig",
+    
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +59,10 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    #"django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    #"dashbord.middleware.RedirectAuthenticateMiddleware",
 ]
 
 ROOT_URLCONF = "website.urls"
@@ -73,6 +78,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "base.utils.context_processors.count",
             ],
         },
     },
@@ -86,13 +92,13 @@ WSGI_APPLICATION = "website.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME":  "etab_bds",
-        "USER": "root",
-        "PASSWORD": "root",
-        "UNIX_SOCKET": "/Applications/MAMP/tmp/mysql/mysql.sock",
-        "HOST": "localhost",
-        "PORT": "8889",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME":  "etab_BD",
+        "USER": "postgres",
+        "PASSWORD": "(!É((À&&",
+        #"UNIX_SOCKET": "/Applications/MAMP/tmp/mysql/mysql.sock",
+        'HOST': '127.0.0.1',  # Ou 'localhost'
+        'PORT': '5432', 
     }
 }
 
@@ -116,6 +122,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
