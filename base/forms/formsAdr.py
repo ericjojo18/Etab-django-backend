@@ -7,6 +7,7 @@ class AddressForm(forms.ModelForm):
         
         fields = {'city','street', 'country'}
         exclude = ['created_at', 'updated_at', 'status']
+        # label = {'city': 'Ville', 'street': 'Rue', 'country': 'Pays'}
         widgets = {
             'city': forms.TextInput(attrs={"class": "form-control",
                                                       "placeholder":"Entrer votre ville","required": True}),

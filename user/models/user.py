@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from base.models.helpers.date_time_model import DateTimeModel
 
 class User(AbstractUser):
-    role = models.ForeignKey(RoleUser, on_delete=models.SET_NULL, null=True,blank=True)
+    role = models.ManyToManyField(RoleUser, related_name='users')
     school = models.ForeignKey(School, on_delete=models.CASCADE,null=True,blank=True)
     #pseudo = models.CharField(max_length=100)
     #password = models.CharField(max_length=255)

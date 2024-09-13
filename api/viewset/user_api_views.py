@@ -2,20 +2,20 @@ from rest_framework import viewsets
 from django.http import JsonResponse, HttpResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from teacher.models.teacher import Teacher
-from api.serializers.teacher_serializers import TeacherSerializer
+from user.models.user import User
+from api.serializers.user_serializers import UserSerializer
 
 
 @csrf_exempt
-def teacher_api(request):
+def user_api(request):
     
     if request.method == 'GET':
-        teachers = Teacher.objects.all()
-        serializer_class = TeacherSerializer(teachers, many=True)
+        users = User.objects.all()
+        serializer_class = UserSerializer(users, many=True)
         return JsonResponse(serializer_class.data, safe=False)
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = TeacherSerializer(data=data)
+        serializer = UserSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -23,22 +23,22 @@ def teacher_api(request):
     
 
 @csrf_exempt
-def teacher_api_view_detail(request, pk):
+def user_api_view_detail(request, pk):
     try:
-        teacher = Teacher.objects.get(pk=pk)
-    except Teacher.DoesNotExist:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
         return HttpResponse(status=404)
     if request.method == 'GET':
-        teachers = Teacher.objects.all()
-        serializer_class = TeacherSerializer(teachers, many=True)
+        users = User.objects.all()
+        serializer_class = UserSerializer(users, many=True)
         return JsonResponse(serializer_class.data, safe=False)
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = TeacherSerializer(teacher, data=data)
+        serializer = UserSerializer(user, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
     elif request.method == 'DELETE':
-        teacher.delete()
+        user.delete()
         return HttpResponse(status=204)

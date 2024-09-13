@@ -38,6 +38,13 @@ def add(request):
             if password:
                 user.set_password(password)
             user.save()
+            # role = request.POST.getlist('role')
+            # role = user_form.cleaned_data.get('role')
+            user.role.add(*user_form.cleaned_data.get('role'))
+            
+            # if role:
+            #     # for r in role:
+            #         user.role.add(*role)
             messages.success(request, "L'utilisateur a bien été ajoute")
             return redirect('user:index')
         else:
@@ -77,6 +84,11 @@ def update(request, id):
             if password:
                 user.set_password(password)
             user.save()
+            user.role.set(user_form.cleaned_data.get('role'))
+            # role = user_form.cleaned_data.get('role')
+            
+            # if role:
+            #     user.role.set(role)
             messages.success(request, "Utilisateur modifie avec succes.")
             return redirect('user:index', )
     else:

@@ -1,6 +1,6 @@
 from  django import forms
 from user.models.user import User
-#from user.models.roleruser import RoleUser
+from user.models.roleruser import RoleUser
 #from school.models.school import School
 
 class UserForm(forms.ModelForm):
@@ -23,7 +23,7 @@ class UserForm(forms.ModelForm):
         fields = ["username","password","role","school",]
         
         widgets = {
-            #'role': forms.Select(attrs={"class": "form-control", "placeholder":"Entrer votre role", "required": True},choices=RoleUser),
+            'role': forms.CheckboxSelectMultiple,
             #'school': forms.Select(attrs={"class": "form-control", "placeholder":"Entrer votre role", "required": True},choices=School),
             'username': forms.TextInput(attrs={"class": "form-control", "placeholder":"Entrer votre pseudo", "required": True}),
             'password': forms.PasswordInput(attrs={"class": "form-control", "placeholder":"Entrer votre mot de passe", "required": True})

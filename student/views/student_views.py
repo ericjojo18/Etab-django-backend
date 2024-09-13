@@ -5,6 +5,7 @@ from user.forms.user_forms import UserForm
 from base.forms.formsAdr import AddressForm
 from student.forms.formsStud import StudentForms
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -19,9 +20,16 @@ def index(request):
                }
     else:
         students = Student.objects.all()
+        paginator =  Paginator(students, 1 )
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        page_range = paginator.get_elided_page_range(
+        page_obj.number, on_each_side=2, on_ends=1)
         students_number = students.count()
         context = {'students': students,
                    'students_number': students_number,
+                   'page_obj': page_obj,
+                   'page_range': page_range,
                }
     return render(request, "student/index.html", context)
 
@@ -38,6 +46,8 @@ def add(request):
             password = user_form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
+            user.role.add(*user_form.cleaned_data.get('role'))
+            
             address = address_form.save()
             student = student_form.save(commit=False)
             student.user = user
@@ -68,16 +78,17 @@ def add(request):
 def update(request, id): 
     
     student = Student.objects.get(id=id)
-    context = {'title': 'Modifier un élève'}
+    # context = {'title': 'Modifier un élève'}
     if request.method == 'POST':
         student_form = StudentForms(request.POST, instance=student)
-        address_form = AddressForm(request.POST, initial=student.address if student else None)
+        address_form = AddressForm(request.POST, instance=student.address if student else None)
         user_form = UserForm(request.POST, instance=student.user if student else None)
-        if student_form.is_valid() and address_form.is_valid() and user_form:
+        if student_form.is_valid() and address_form.is_valid() and user_form.is_valid():
             user = user_form.save(commit=False)
             password = user_form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
+            user.role.set(user_form.cleaned_data.get('role'))
             address = address_form.save()
             student = student_form.save(commit=False)
             student.user = user
@@ -85,16 +96,17 @@ def update(request, id):
             student.save()
             messages.success(request, "Eleve modifié.")
             return redirect('student:index')
-    else:
-        student_form = StudentForms(instance=student)
+        else:
+            student_form = StudentForms(instance=student)
     
     
-    address_form = AddressForm(instance=student.address if student else None)
+    address_form = AddressForm(instance=student.address )
     user_form = UserForm(instance=student.user if student else None)    
     student_form = StudentForms(instance=student)
     context = {'student_form': student_form,
                'address_form': address_form,
                'user_form': user_form, 
+               'title': 'Modifier un élève'
                }
     return render(request, "student/form.html", context, )
 
