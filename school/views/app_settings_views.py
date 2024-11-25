@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from school.forms.forms_app_settings import AppSettingForm
-from school.models.app_setting import AppSetting
+from school.models.app_setting_model import AppSettingModel
 from django.urls import reverse
 
 # Create your views here. 
@@ -33,7 +33,7 @@ def add(request):
             print(appsetting_form.errors)
             messages.error(request, "Paramétre non modifie")
         
-    app_settings = AppSetting.objects.all()
+    app_settings = AppSettingModel.objects.all()
         
         # if not app_settings:
         #     return redirect('appsetting:add')
@@ -53,7 +53,7 @@ def add(request):
 def update(request, ): 
     
     #appsetting = AppSetting.objects.get(id=id)
-    appsetting = AppSetting.objects.first()
+    appsetting = AppSettingModel.objects.first()
     context = {'title': 'Modifier un paramétre'}
     if request.method == 'POST':
         appsetting_form = AppSettingForm(request.POST, instance=appsetting)
@@ -70,7 +70,7 @@ def update(request, ):
 
 
 def check_settings(request):
-    app_settings = AppSetting.objects.all()
+    app_settings = AppSettingModel.objects.all()
     if not app_settings:
         return redirect('appsetting:add')
         

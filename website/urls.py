@@ -20,7 +20,7 @@ from django.urls import include,path
 from dashbord.views import index
 from teacher.views import index
 #from user.views import index
-from rapport.views import index
+from report.views import index
 
 
 urlpatterns = [
@@ -33,7 +33,7 @@ urlpatterns = [
     path('dashbord/', include('dashbord.urls')),
     path('professeur/',include('teacher.urls')), 
     path('utilisateur/',include('user.urls')),
-    path('rapport/',include('rapport.urls')),
+    path('report/', include('report.urls')),
     
     #api 
     path('api-auth/', include('rest_framework.urls')),

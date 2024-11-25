@@ -1,13 +1,13 @@
 from typing import Any
 from django import forms
-from school.models.app_setting import AppSetting
+from school.models.app_setting_model import AppSettingModel
 from django.contrib.auth.hashers import make_password
 
 class AppSettingForm(forms.ModelForm):
     
     
     class Meta:
-        model = AppSetting
+        model = AppSettingModel
         fields = "__all__"
         labels = {'smtp_username': 'smpt_nom_utilisateur', 'smtp_password':'smtp mot de passe'}
         widgets ={

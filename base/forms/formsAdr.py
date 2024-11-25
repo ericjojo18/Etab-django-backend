@@ -1,9 +1,9 @@
 from django import forms
-from base.models.address import Address
+from base.models.address_model import AddressModel
 
 class AddressForm(forms.ModelForm):
     class Meta:
-        model = Address
+        model = AddressModel
         
         fields = {'city','street', 'country'}
         exclude = ['created_at', 'updated_at', 'status']

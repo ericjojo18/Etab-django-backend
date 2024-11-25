@@ -1,3 +1,3 @@
-from . import absence
-from . import student
-from . import studentcards
+from . import absence_model
+from . import student_model
+from . import student_cards_model

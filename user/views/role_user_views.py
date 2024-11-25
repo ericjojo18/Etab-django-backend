@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from user.forms.role_user_forms import RoleUserForm
-from user.models.roleruser import RoleUser
+from user.models.role_model import RoleModel
 
 from django.contrib.auth.decorators import login_required
 
@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='auth:login')
 def index(request):
-    roles = RoleUser.objects.all()
+    roles = RoleModel.objects.all()
     
     
     context = {'roles': roles,
@@ -46,7 +46,7 @@ def add(request):
 @login_required(login_url='auth:login')
 def update(request, id): 
     
-    role = RoleUser.objects.get(id=id)
+    role = RoleModel.objects.get(id=id)
     context = {'title': 'Modifier un role'}
     if request.method == 'POST':
         role_form = RoleUserForm(request.POST, instance=role)
@@ -63,7 +63,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id): 
-    role = RoleUser.objects.get(id=id)
+    role = RoleModel.objects.get(id=id)
     role.delete()
     messages.warning(request, "role supprime.")
     return redirect('role:index')

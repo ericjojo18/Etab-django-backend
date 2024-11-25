@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from student.models.studentcards import StudentCards
-from student.forms.formsStudC import StudentCardForm
+from student.models.student_cards_model import StudentCardsModel
+from student.forms.forms_student_card import StudentCardForm
 
 ########################### STUDENTS CARDS ##########################
 
 @login_required(login_url='auth:login')
 def index(request):
-    student_cards = StudentCards.objects.all()
+    student_cards = StudentCardsModel.objects.all()
     total_student_cards = student_cards.count()
     context = {'student_cards': student_cards,
                'total_student_cards': total_student_cards,
@@ -42,7 +42,7 @@ def add(request):
 @login_required(login_url='auth:login')
 def update(request, id): 
     
-    studentcard = StudentCards.objects.get(id=id)
+    studentcard = StudentCardsModel.objects.get(id=id)
     context = {'title': 'Modifier un absence'}
     if request.method == 'POST':
         stucards_form = StudentCardForm(request.POST, instance=studentcard)
@@ -59,7 +59,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id): 
-    studentcard = StudentCards.objects.get(id=id)
+    studentcard = StudentCardsModel.objects.get(id=id)
     studentcard.delete()
     messages.warning(request, "Carte supprime.")
     return redirect('studentcard:index')

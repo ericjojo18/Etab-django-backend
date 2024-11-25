@@ -1,11 +1,11 @@
 from django import forms
-from user.models.roleruser import RoleUser
+from user.models.role_model import RoleModel
 
 class RoleUserForm(forms.ModelForm):
     class Meta:
-        model = RoleUser
-        fields = ["role"]
+        model = RoleModel
+        fields = ["name"]
         
         widgets = {
-            'role': forms.TextInput(attrs={"class": "form-control", "placeholder":"Entrer votre role", "required": True})
+            'name': forms.TextInput(attrs={"class": "form-control", "placeholder":"Entrer votre role", "required": True})
         }

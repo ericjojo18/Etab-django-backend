@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +29,9 @@ SECRET_KEY = "django-insecure-ln@3@*r1#w-p=%qlf+$n_8#s@oeo^dhaq=t02j(r^1q3c0k8ua
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+#Pour permettre le login et registrer un nouvel utilisateur personnalise
+AUTH_USER_MODEL = "user.User"
 
 
 # Application definition
@@ -44,13 +49,17 @@ INSTALLED_APPS = [
     "dashbord",
     "teacher.apps.TeacherConfig",
     "user.apps.UserConfig",
-    "rapport",
+    "report",
     "auth.apps.AuthConfig",
     "base.apps.BaseConfig",
     "school.apps.SchoolConfig",
     "api.apps.ApiConfig",
     
     'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
+    "corsheaders",
+
 ]
 
 MIDDLEWARE = [
@@ -62,7 +71,8 @@ MIDDLEWARE = [
     #"django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    #"dashbord.middleware.RedirectAuthenticateMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "website.urls"
@@ -92,8 +102,8 @@ WSGI_APPLICATION = "website.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME":  "etab_BD",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "etab_BD",
         "USER": "postgres",
         "PASSWORD": "(!É((À&&",
         #"UNIX_SOCKET": "/Applications/MAMP/tmp/mysql/mysql.sock",
@@ -121,15 +131,49 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'user.UserModel'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "JWT Authorization header using the Bearer scheme. Example: 'Authorization: JWT <token>'",
+        },
+    },
+    'USE_SESSION_AUTH': False,
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'LOGIN_URL': 'rest_framework:login',
+    'LOGOUT_URL': 'rest_framework:logout',
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=180),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+
+}
+  
+ 
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -168,3 +212,5 @@ STATICFILES_DIRS = [
 CRIPSY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap"
+
+CORS_ALLOW_ALL_ORIGINS = True

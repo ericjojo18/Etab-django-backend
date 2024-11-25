@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from school.forms.forms_school import SchoolForm
-from school.models.school import School
+from school.models.school_model import SchoolModel
 
 # Create your views here.
 
@@ -31,7 +31,7 @@ def add(request):
             #print(appsetting_form.errors)
             messages.error(request, "Ecole non modifié")
             #return render(request, "student/add_student.html" )
-    schools = School.objects.all()
+    schools = SchoolModel.objects.all()
     
         
         
@@ -51,7 +51,7 @@ def update(request):
     
     # school = School.objects.get(id=id)
     #pour recuperer les paramètres d'un seul ecole
-    school = School.objects.first()
+    school = SchoolModel.objects.first()
     context = {'title': 'Modifier une école'}
     if request.method == 'POST':
         school_form = SchoolForm(request.POST, instance=school)
@@ -70,7 +70,7 @@ def update(request):
 
 #la fonction check_settings permet de bloquer l'utilisateur si il n'est pas connecté
 def check_schools(request):
-    schools = School.objects.all()
+    schools = SchoolModel.objects.all()
     if not schools:
         return redirect('school:add')
     else:

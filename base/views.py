@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from base.forms.formsAdr import AddressForm
-from base.models.address import Address
+from base.models.address_model import AddressModel
 # Create your views here.
 
 @login_required(login_url='auth:login')
 def index(request):
-    addresse = Address.objects.all()
+    addresse = AddressModel.objects.all()
     context = {'addresse': addresse}
     return render(request, "address/index.html",context)
 
@@ -41,7 +41,7 @@ def add(request):
 @login_required(login_url='auth:login')
 def update(request, id): 
     
-    address = Address.objects.get(id=id)
+    address = AddressModel.objects.get(id=id)
     context = {'title': 'Modifier un adresse'}
     if request.method == 'POST':
         address_form = AddressForm(request.POST, instance=address)
@@ -58,7 +58,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id):
-        address= Address.objects.get(id=id)
+        address= AddressModel.objects.get(id=id)
         address.delete()
         messages.warning(request, "Adresse supprime.")
         return redirect('base:index')

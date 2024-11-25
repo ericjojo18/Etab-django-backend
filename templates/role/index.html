@@ -11,7 +11,7 @@ Liste des roles
     <div class="recent-orders">
         <div class="header">
             <h2>role ({{total}})</h2>
-            <a href="{%url 'role:add' %}" class="new-student-btn">+ Nouveau Professeur</a>   
+            <a href="{%url 'role:add' %}" class="new-student-btn">+ Nouveau Role</a>
         </div>
         
         <table>
@@ -26,7 +26,7 @@ Liste des roles
             <tbody>
                 {% for role in roles%}
                 <tr>
-                    <td>{{role.role}}</td>
+                    <td>{{role.name}}</td>
                     <td >
                         <a href="{% url  'role:update' id=role.id %}"><button  class="btn edit">Modifier</button></a>
 

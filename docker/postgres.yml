@@ -1,0 +1,18 @@
+#version: "3.8"
+services:
+  # db:
+  #   build: ./src
+  #   #command: python manage.py runserver 0.0.0.0:8000
+  db:
+    image: postgres:16
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=(!É((À&&
+        - POSTGRES_DB=etab_BD
+    ports:
+        - 5432:5432 # port d'ecoute de la base de donnée postgres
+    volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,12 +1,12 @@
 from django.contrib import admin
-from user.models.user import User
-from user.models.roleruser import RoleUser
-from school.models.school import School
-from school.models.app_setting import AppSetting
+from user.models.user_model import UserModel
+from user.models.role_model import RoleModel
+from school.models.school_model import SchoolModel
+from school.models.app_setting_model import AppSettingModel
 
 # Register your models here.
 
-admin.site.register(User) 
-admin.site.register(RoleUser) 
-admin.site.register(School) 
-admin.site.register(AppSetting) 
+admin.site.register(UserModel)
+admin.site.register(RoleModel)
+admin.site.register(SchoolModel)
+admin.site.register(AppSettingModel)

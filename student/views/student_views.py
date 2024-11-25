@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from student.models.student import Student
+from student.models.student_model import StudentModel
 from user.forms.user_forms import UserForm
 from base.forms.formsAdr import AddressForm
-from student.forms.formsStud import StudentForms
+from student.forms.forms_student import StudentForms
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
@@ -14,12 +14,12 @@ from django.core.paginator import Paginator
 def index(request):
     search_field = request.GET.get('search')
     if search_field:
-        students = Student.objects.filter(first_name__icontains=search_field ) | Student.objects.filter(last_name__icontains=search_field)
+        students = StudentModel.objects.filter(first_name__icontains=search_field ) | StudentModel.objects.filter(last_name__icontains=search_field)
         context = {'students': students,
                    'search_field': search_field,
                }
     else:
-        students = Student.objects.all()
+        students = StudentModel.objects.all()
         paginator =  Paginator(students, 1 )
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -41,7 +41,7 @@ def add(request):
         address_form = AddressForm(request.POST)
         user_form = UserForm(request.POST)
 
-        if student_form.is_valid() and address_form.is_valid() and user_form:
+        if student_form.is_valid() and address_form.is_valid() and user_form.is_valid():
             user = user_form.save(commit=False)
             password = user_form.cleaned_data.get('password')
             user.set_password(password)
@@ -77,7 +77,7 @@ def add(request):
 @login_required(login_url='auth:login')
 def update(request, id): 
     
-    student = Student.objects.get(id=id)
+    student = StudentModel.objects.get(id=id)
     # context = {'title': 'Modifier un élève'}
     if request.method == 'POST':
         student_form = StudentForms(request.POST, instance=student)
@@ -112,7 +112,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id): 
-    student = Student.objects.get(id=id)
+    student = StudentModel.objects.get(id=id)
     student.delete()
     messages.warning(request, "Eleve supprime.")
     return redirect('student:index')

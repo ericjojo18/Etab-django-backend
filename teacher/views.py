@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from teacher.models.teacher import Teacher
+from teacher.models.teacher_model import TeacherModel
 from teacher.forms import  TeacherForms
 from base.forms.formsAdr import AddressForm
 from user.forms.user_forms import UserForm
@@ -13,13 +13,13 @@ def index(request):
     
     search_field = request.GET.get('search')
     if search_field :
-        teachers = Teacher.objects.filter(first_name__icontains=search_field) | Teacher.objects.filter(last_name__icontains=search_field)
+        teachers = TeacherModel.objects.filter(first_name__icontains=search_field) | TeacherModel.objects.filter(last_name__icontains=search_field)
         context = {
             'teachers': teachers,
             'search_field': search_field,
         }
     else:
-        teachers = Teacher.objects.all()
+        teachers = TeacherModel.objects.all()
         total_teachers = teachers.count()
         context = {
             'teachers': teachers,
@@ -72,7 +72,7 @@ def add(request):
 
 @login_required(login_url='auth:login')
 def update(request, id):
-    teacher = Teacher.objects.get(id=id)
+    teacher = TeacherModel.objects.get(id=id)
     # print(teacher.id)
     context = {'title': 'Modifier un professeur'}
     
@@ -113,7 +113,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id):
-        teacher = Teacher.objects.get(id=id)
+        teacher = TeacherModel.objects.get(id=id)
         teacher.delete()
         messages.success(request, "Professeur supprime avec succes.")
         return redirect('teacher:index')

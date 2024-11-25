@@ -1,16 +1,16 @@
-from school.models.school import School
-from student.models.student import Student
-from user.models.user import User   
-from teacher.models.teacher import Teacher
+from school.models.school_model import SchoolModel
+from student.models.student_model import StudentModel
+from user.models.user_model import UserModel
+from teacher.models.teacher_model import TeacherModel
 
  
 def count(request):
-    students_number = Student.objects.filter(status=True).count()
+    students_number = StudentModel.objects.filter(status=True).count()
     # schools_number = School.objects.filter(status=True).count()
-    students_female = Student.objects.filter(gender="FEMALE").count()
-    students_male = Student.objects.filter(gender="MALE").count()
-    teachers_number = Teacher.objects.filter(status=True).count()
-    users_number = User.objects.filter(is_active=True).count()
+    students_female = StudentModel.objects.filter(gender="FEMALE").count()
+    students_male = StudentModel.objects.filter(gender="MALE").count()
+    teachers_number = TeacherModel.objects.filter(status=True).count()
+    users_number = UserModel.objects.filter(is_active=True).count()
     
     return  {'students_number': students_number,
             #  'schools_number': schools_number,

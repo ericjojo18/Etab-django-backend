@@ -1,6 +1,6 @@
 from  django import forms
-from user.models.user import User
-from user.models.roleruser import RoleUser
+from user.models.user_model import UserModel
+#from user.models.role_model import RoleUser
 #from school.models.school import School
 
 class UserForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class UserForm(forms.ModelForm):
         self.fields['username'].help_text = ''
     
     class Meta:
-        model = User
+        model = UserModel
         fields = ["username","password","role","school",]
         
         widgets = {

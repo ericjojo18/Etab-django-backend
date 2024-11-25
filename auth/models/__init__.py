@@ -1,1 +1,1 @@
-from .sitelogo import SiteLogo
+from .sitelogo_model import SiteLogoModel

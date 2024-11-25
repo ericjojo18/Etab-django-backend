@@ -1,11 +1,11 @@
 from django import forms
-from school.models.school import School
-from school.models.app_setting import AppSetting
+from school.models.school_model import SchoolModel
+from school.models.app_setting_model import AppSettingModel
 
 class SchoolForm(forms.ModelForm):
     
     class Meta:
-        model = School
+        model = SchoolModel
         fields = "__all__"
         
         widgets = {
@@ -13,6 +13,6 @@ class SchoolForm(forms.ModelForm):
                                                                "placeholder":"Entrer votre nom d'école", "required": True}),
             'url_logo': forms.URLInput(attrs={"class": "form-control", 
                                                                "placeholder":"Entrer votre url de l'image", "required": True}),
-            'app_id': forms.Select(attrs={"class": "form-control",  "required": True}, choices=AppSetting)
+            'app_id': forms.Select(attrs={"class": "form-control",  "required": True}, choices=AppSettingModel)
         }
         

@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from student.forms.FormsAbs import AbsenceForm
-from student.models.absence import Absence
+from student.forms.forms_absence import AbsenceForm
+from student.models.absence_model import AbsenceModel
 
 # Create your views here.
 
 ##################################### Absence ################################
 @login_required(login_url='auth:login')
 def index(request):
-    absences = Absence.objects.all()
+    absences = AbsenceModel.objects.all()
     total_absences = absences.count()
     
     context = {'absences': absences,
@@ -48,7 +48,7 @@ def add(request):
 @login_required(login_url='auth:login')
 def update(request, id): 
     
-    absence = Absence.objects.get(id=id)
+    absence = AbsenceModel.objects.get(id=id)
     context = {'title': 'Modifier un absence'}
     if request.method == 'POST':
         absence_form = AbsenceForm(request.POST, instance=absence)
@@ -65,7 +65,7 @@ def update(request, id):
 
 @login_required(login_url='auth:login')
 def delete(request, id): 
-    absence = Absence.objects.get(id=id)
+    absence = AbsenceModel.objects.get(id=id)
     absence.delete()
     messages.warning(request, "absence supprime.")
     return redirect('student_absence:index')

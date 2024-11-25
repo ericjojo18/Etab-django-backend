@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 #from django.contrib.auth.models import User
-from user.models.user import User
+from user.models.user_model import UserModel
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from user.forms.user_forms import UserForm
@@ -11,13 +11,13 @@ from user.forms.user_forms import UserForm
 def index(request, ): 
     search_field = request.GET.get('search')
     if search_field :
-        users = User.objects.filter(username__icontains=search_field)
+        users = UserModel.objects.filter(username__icontains=search_field)
         context = {
             'users': users,
             'search_field': search_field,
         }
     else:
-        users = User.objects.all()
+        users = UserModel.objects.all()
         total_users = users.count()
         context = {
             'users': users,

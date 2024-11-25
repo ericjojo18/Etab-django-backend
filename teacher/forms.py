@@ -1,10 +1,10 @@
 from django import forms
-from .models.teacher import Teacher
+from .models.teacher_model import TeacherModel
 
 
 class TeacherForms(forms.ModelForm):
         class Meta:
-            model = Teacher
+            model = TeacherModel
             fields = ['first_name', 'last_name', 'birthday', 'phone_number', 'available',
                       'url_picture', 'gender', 'address', 'speciality']
             exclude = ['user', 'address', 'created_at', 'updated_at', 'status']
